@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EmployeeMgmt.Data;
 using EmployeeMgmt.Models;
+using System.Linq;
 
 namespace EmployeeMgmt.Controllers
 {
@@ -23,6 +24,12 @@ namespace EmployeeMgmt.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Employee.ToListAsync());
+        }
+
+        // GET: Employee Salaries
+        public IActionResult EmployeeSalaries(int Id)
+        {
+            return View(_context.EmployeeSalary.ToListAsync().Result.Where(i => i.EmployeeId == Id && i.SalaryDate.Year == DateTime.Now.Year).ToList());
         }
 
         // GET: Employees/Details/5
